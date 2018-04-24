@@ -2,6 +2,7 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import Config from '../Config/DebugConfig'
 import createSagaMiddleware from 'redux-saga'
 import ScreenTracking from './ScreenTrackingMiddleware'
+import {createReactNavigationReduxMiddleware} from 'react-navigation-redux-helpers'
 
 // creates the store
 export default (rootReducer, rootSaga) => {
@@ -9,6 +10,16 @@ export default (rootReducer, rootSaga) => {
 
   const middleware = []
   const enhancers = []
+
+  /* ------------- navigation  Middleware ------------- */
+
+
+  const NavigationMiddleware = createReactNavigationReduxMiddleware(
+    'root',
+    state => state.nav
+  )
+
+  middleware.push(NavigationMiddleware)
 
   /* ------------- Analytics Middleware ------------- */
   middleware.push(ScreenTracking)
