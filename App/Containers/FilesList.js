@@ -1,6 +1,7 @@
 import React from 'react'
 import {View, Text, FlatList, SafeAreaView} from 'react-native'
 import { connect } from 'react-redux'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 // More info here: https://facebook.github.io/react-native/docs/flatlist.html
 
@@ -119,13 +120,18 @@ class FilesList extends React.PureComponent {
     return <MyCustomCell title={item.title} description={item.description} />
   *************************************************************/
   renderRow ({item}) {
+    const time = item.modification_time * 1000
+    const date = new Date(time)
+    const myIcon = (<Icon name='file-word' size={30} />)
+
+    const formatedDate = date.toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' })
     return (
       <ListItem
         divider
-        leftElement='folder'
+        leftElement={myIcon}
         centerElement={{
           primaryText: item.name,
-          secondaryText: `modifié: ${item.modification_time}`
+          secondaryText: `modifié: ${formatedDate}`
         }}
       />
     )
