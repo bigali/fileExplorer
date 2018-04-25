@@ -8,6 +8,11 @@ import { connect } from 'react-redux'
 import styles from './Styles/FilesListStyle'
 
 class FilesList extends React.PureComponent {
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: 'Library'
+    }
+  }
   /* ***********************************************************
   * STEP 1
   * This is an array of objects with the properties you desire
@@ -15,13 +20,87 @@ class FilesList extends React.PureComponent {
   *************************************************************/
   state = {
     dataObjects: [
-      {title: 'First Title', description: 'First Description'},
-      {title: 'Second Title', description: 'Second Description'},
-      {title: 'Third Title', description: 'Third Description'},
-      {title: 'Fourth Title', description: 'Fourth Description'},
-      {title: 'Fifth Title', description: 'Fifth Description'},
-      {title: 'Sixth Title', description: 'Sixth Description'},
-      {title: 'Seventh Title', description: 'Seventh Description'}
+      {
+        'id': 1,
+        'name': 'Wallpapers',
+        'mimetype': 'inode/directory',
+        'size': 1,
+        'modification_time': 1515444952,
+        'path': '/wallpapers'
+      },
+      {
+        'id': 2,
+        'name': 'Starry Night',
+        'mimetype': 'image/jpg',
+        'size': 263752,
+        'modification_time': 1515622647,
+        'url': 'https://images.unsplash.com/photo-1518239295416-eca75302abb7?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=b48d0ef09fb418165e1d234551c4b0b1&auto=format&fit=crop&w=1307&q=80'
+      },
+      {
+        'id': 3,
+        'name': 'Cheers',
+        'mimetype': 'image/png',
+        'size': 204009,
+        'modification_time': 1515628374,
+        'url': 'https://cdn.dribbble.com/users/327319/screenshots/4453188/cheers.png'
+      },
+      {
+        'id': 4,
+        'name': 'Big Buck Bunny',
+        'mimetype': 'video/mp4',
+        'size': 64592281,
+        'modification_time': 1515617899,
+        'url': 'http://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_320x180.mp4'
+      },
+      {
+        'id': 5,
+        'name': 'Sounds',
+        'mimetype': 'inode/directory',
+        'size': 1,
+        'modification_time': 1515454922,
+        'path': '/sounds'
+      },
+      {
+        'id': 6,
+        'name': 'Fluent Design System',
+        'mimetype': 'image/png',
+        'size': 220092,
+        'modification_time': 1515617887,
+        'url': 'https://cdn.dribbble.com/users/1766682/screenshots/4441315/fluent_dribbble_post_800x600.png'
+      },
+      {
+        'id': 7,
+        'name': 'Night City',
+        'mimetype': 'image/png',
+        'size': 356867,
+        'modification_time': 1515613211,
+        'url': 'https://cdn.dribbble.com/users/646147/screenshots/4454375/city-night.png'
+      },
+      {
+        'id': 8,
+        'name': 'Daydreaming',
+        'mimetype': 'audio/mpeg',
+        'size': 347222,
+        'modification_time': 1515613211,
+        'url': 'http://soundbible.com/mp3/Tinkle-Lisa_Redfern-1916445296.mp3'
+      },
+      {
+        'id': 9,
+        'name': 'Documents',
+        'mimetype': 'inode/directory',
+        'size': 1,
+        'modification_time': 1515446539,
+        'path': '/documents'
+      },
+      {
+        'id': 10,
+        'name': 'Cat',
+        'mimetype': 'image/gif',
+        'size': 454763,
+        'modification_time': 1515448463,
+        'url': 'https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif'
+      }
+
     ]
   }
 
