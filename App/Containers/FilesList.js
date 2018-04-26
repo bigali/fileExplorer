@@ -7,7 +7,16 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 // Styles
 import styles from './Styles/FilesListStyle'
-import {Toolbar, ListItem} from 'react-native-material-ui'
+import {Toolbar, ListItem,ActionButton} from 'react-native-material-ui'
+
+const TypesIcon = {
+  'inode/directory': 'folder',
+  'image/jpg': 'file-image',
+  'image/png': 'file-image',
+  'image/gif': 'file-image',
+  'video/mp4': 'file-video',
+  'audio/mpeg': 'file-music'
+}
 
 class FilesList extends React.PureComponent {
   static navigationOptions = {
@@ -122,7 +131,7 @@ class FilesList extends React.PureComponent {
   renderRow ({item}) {
     const time = item.modification_time * 1000
     const date = new Date(time)
-    const myIcon = (<Icon name='file-word' size={30} />)
+    const myIcon = (<Icon name={TypesIcon[item.mimetype]} size={30} />)
 
     const formatedDate = date.toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' })
     return (
@@ -189,6 +198,11 @@ class FilesList extends React.PureComponent {
           keyExtractor={this.keyExtractor}
           initialNumToRender={this.oneScreensWorth}
           ListEmptyComponent={this.renderEmpty}
+        />
+        <ActionButton
+          actions={[{ icon: 'file-upload', label: 'file upload' }, { icon: 'create new folder', label: 'create-new-folder' }]}
+          icon="add"
+          transition="speedDial"
         />
       </SafeAreaView>
     )
