@@ -1,18 +1,25 @@
 import React from 'react'
-import { View, Text, FlatList } from 'react-native'
+import {View, Text, FlatList, SafeAreaView} from 'react-native'
 import { connect } from 'react-redux'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 // More info here: https://facebook.github.io/react-native/docs/flatlist.html
 
 // Styles
 import styles from './Styles/FilesListStyle'
+import {Toolbar, ListItem} from 'react-native-material-ui'
 
 class FilesList extends React.PureComponent {
-  static navigationOptions = ({ navigation }) => {
-    return {
-      title: 'Library'
-    }
+  static navigationOptions = {
+    header: <Toolbar
+      centerElement='/'
+      searchable={{
+        autoFocus: true,
+        placeholder: 'Search'
+      }}
+    />
   }
+
   /* ***********************************************************
   * STEP 1
   * This is an array of objects with the properties you desire
@@ -113,11 +120,20 @@ class FilesList extends React.PureComponent {
     return <MyCustomCell title={item.title} description={item.description} />
   *************************************************************/
   renderRow ({item}) {
+    const time = item.modification_time * 1000
+    const date = new Date(time)
+    const myIcon = (<Icon name='file-word' size={30} />)
+
+    const formatedDate = date.toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' })
     return (
-      <View style={styles.row}>
-        <Text style={styles.boldLabel}>{item.title}</Text>
-        <Text style={styles.label}>{item.description}</Text>
-      </View>
+      <ListItem
+        divider
+        leftElement={myIcon}
+        centerElement={{
+          primaryText: item.name,
+          secondaryText: `modifié: ${formatedDate}`
+        }}
+      />
     )
   }
 
@@ -165,19 +181,16 @@ class FilesList extends React.PureComponent {
 
   render () {
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <FlatList
           contentContainerStyle={styles.listContent}
           data={this.state.dataObjects}
           renderItem={this.renderRow}
           keyExtractor={this.keyExtractor}
           initialNumToRender={this.oneScreensWorth}
-          ListHeaderComponent={this.renderHeader}
-          ListFooterComponent={this.renderFooter}
           ListEmptyComponent={this.renderEmpty}
-          ItemSeparatorComponent={this.renderSeparator}
         />
-      </View>
+      </SafeAreaView>
     )
   }
 }
