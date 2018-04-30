@@ -17,7 +17,7 @@ export default Creators
 export const INITIAL_STATE = Immutable({
   data: null,
   fetching: null,
-  payload: null,
+  payload: [],
   error: null
 })
 
@@ -31,7 +31,7 @@ export const FileSystemSelectors = {
 
 // request the data from an api
 export const request = (state, { node }) =>
-  state.merge({ fetching: true, node, payload: null })
+  state.merge({ fetching: true, node, payload: [] })
 
 // successful api lookup
 export const success = (state, action) => {
@@ -41,7 +41,7 @@ export const success = (state, action) => {
 
 // Something went wrong somewhere.
 export const failure = state =>
-  state.merge({ fetching: false, error: true, payload: null })
+  state.merge({ fetching: false, error: true, payload: [] })
 
 /* ------------- Hookup Reducers To Types ------------- */
 

@@ -1,4 +1,5 @@
 import { StackNavigator } from 'react-navigation'
+import DocumentViewScreen from '../Containers/DocumentViewScreen'
 import FilesList from '../Containers/FilesList'
 import LaunchScreen from '../Containers/LaunchScreen'
 
@@ -7,10 +8,11 @@ import Colors from '../Themes/Colors'
 
 // Manifest of possible screens
 const PrimaryNav = StackNavigator({
+  DocumentViewScreen: { screen: DocumentViewScreen },
   FilesList: { screen: FilesList }
 }, {
   // Default config for all screens
-  headerMode: 'float',
+  headerMode: 'none',
   initialRouteName: 'FilesList',
   navigationOptions: {
     headerStyle: styles.header,

@@ -21,6 +21,7 @@ export function * getFileSystem (api, action) {
   // make the call to the api
   const response = yield call(api.getNode, node)
 
+  console.log(response)
   // success?
   if (response.ok) {
     // You might need to change the response here - do this with a 'transform',

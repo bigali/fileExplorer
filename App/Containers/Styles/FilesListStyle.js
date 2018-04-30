@@ -25,5 +25,12 @@ export default StyleSheet.create({
     color: Colors.snow
   },
   listContent: {
+  },
+  modal4: {
+    height: 300
+  },
+  modal: {
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 })

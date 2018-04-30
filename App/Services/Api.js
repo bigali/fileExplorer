@@ -1,8 +1,9 @@
 // a library to wrap and simplify api calls
 import apisauce from 'apisauce'
-
+import { cacheAdapterEnhancer } from 'axios-extensions';
+import axios from 'axios'
 // our "constructor"
-const create = (baseURL = 'http://private-2c2b2-nodes4.apiary-mock.com/nodes') => {
+const create = (baseURL = 'http://private-2c2b2-nodes4.apiary-mock.com') => {
   // ------
   // STEP 1
   // ------
@@ -14,10 +15,10 @@ const create = (baseURL = 'http://private-2c2b2-nodes4.apiary-mock.com/nodes') =
     baseURL,
     // here are some default headers
     headers: {
-      'Cache-Control': 'no-cache'
+      'Cache-Control': 'no-cache',
     },
-    // 10 second timeout...
-    timeout: 10000
+    timeout: 10000,
+    adapter: cacheAdapterEnhancer(axios.defaults.adapter)
   })
 
   // ------
