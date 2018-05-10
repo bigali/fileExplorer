@@ -89,24 +89,38 @@ class FilesList extends React.Component {
       selectedItem: '',
       swipeToClose: true,
       modalOpen: false,
-      visible: false
+      visible: false,
+      refreshing: false
     }
   }
 
-  componentWillReceiveProps (nextProps) {
-    console.log('received props: ', nextProps)
+  _handleRefresh = () => {
     this.setState({
-      dataObjects: nextProps.files
+      refreshing: true
+    }, () => {
+      this._getData()
     })
   }
 
-  componentWillMount () {
-    console.log('will mount')
+  _getData = () => {
     const {navigation, fileSystemRequest} = this.props
     const params = navigation.state.params
 
     const node = params ? params.path : ''
     fileSystemRequest(node)
+  }
+
+  componentWillReceiveProps (nextProps) {
+    console.log('received props: ', nextProps)
+    this.setState({
+      dataObjects: nextProps.files,
+      refreshing: false
+    })
+  }
+
+  componentWillMount () {
+    console.log('will mount')
+    this._getData()
   }
 
   componentDidMount () {
@@ -146,7 +160,7 @@ class FilesList extends React.Component {
       })
       .catch(error => {
         // error
-        console.log('false')
+        console.log('false', error)
         this.setState({
           visible: false
         })
@@ -207,7 +221,7 @@ class FilesList extends React.Component {
     return (
       <SafeAreaView style={styles.container}>
         {this.renderAppHeader()}
-        {this.props.fetching
+        {(this.props.fetching && !this.state.refreshing)
           ? <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
             <ActivityIndicator size='large' color={Colors.primary} />
           </View>
@@ -219,6 +233,8 @@ class FilesList extends React.Component {
               keyExtractor={this.keyExtractor}
               initialNumToRender={this.oneScreensWorth}
               ListEmptyComponent={this.renderEmpty}
+              refreshing={this.state.refreshing}
+              onRefresh={this._handleRefresh}
             />
             <ActionButton
               actions={[{icon: 'file-upload', label: 'file upload'}, {
