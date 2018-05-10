@@ -10,7 +10,7 @@ import {COLOR, Toolbar} from 'react-native-material-ui'
 import Image from 'react-native-scalable-image'
 import Video from 'react-native-video'
 import MediaControls, {PLAYER_STATES} from 'react-native-media-controls'
-
+import ImageZoom from 'react-native-image-pan-zoom'
 class DocumentViewScreen extends Component {
   static navigationOptions = ({navigation}) => {
     const params = navigation.state.params
@@ -20,7 +20,7 @@ class DocumentViewScreen extends Component {
     }
   }
 
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       currentTime: 0,
@@ -33,26 +33,26 @@ class DocumentViewScreen extends Component {
   }
 
   onSeek = seek => {
-    this.videoPlayer.seek(seek);
+    this.videoPlayer.seek(seek)
   };
 
   onPaused = playerState => {
     this.setState({
       paused: !this.state.paused,
-      playerState,
-    });
+      playerState
+    })
   };
 
   onReplay = () => {
-    this.setState({playerState: PLAYER_STATES.PLAYING});
-    this.videoPlayer.seek(0);
+    this.setState({playerState: PLAYER_STATES.PLAYING})
+    this.videoPlayer.seek(0)
   };
 
   onProgress = data => {
-    const {isLoading, playerState} = this.state;
+    const {isLoading, playerState} = this.state
     // Video Player will continue progress even if the video already ended
     if (!isLoading && playerState !== PLAYER_STATES.ENDED) {
-      this.setState({currentTime: data.currentTime});
+      this.setState({currentTime: data.currentTime})
     }
   };
 
@@ -78,16 +78,24 @@ class DocumentViewScreen extends Component {
     </View>
   );
 
-  render() {
+  render () {
     const params = this.props.navigation.state.params
     let content = null
     if (params.mimetype.includes('image/')) {
       content = (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: -56 }}>
-          <Image
-            width={Dimensions.get('window').width} // height will be calculated automatically
-            source={{uri: params.url}}
+          <ImageZoom
+            cropWidth={Dimensions.get('window').width}
+            cropHeight={Dimensions.get('window').height}
+            imageWidth={Dimensions.get('window').width}
+            imageHeight={Dimensions.get('window').width}
+            enableSwipeDown
+          >
+            <Image
+              width={Dimensions.get('window').width} // height will be calculated automatically
+              source={{uri: params.url}}
           />
+          </ImageZoom>
         </View>
       )
     } else if (params.mimetype.includes('video/') || params.mimetype.includes('audio/')) {
@@ -107,7 +115,7 @@ class DocumentViewScreen extends Component {
           <MediaControls
             duration={this.state.duration}
             isLoading={this.state.isLoading}
-            mainColor="orange"
+            mainColor='orange'
             onFullScreen={this.onFullScreen}
             onPaused={this.onPaused}
             onReplay={this.onReplay}
@@ -117,11 +125,11 @@ class DocumentViewScreen extends Component {
             progress={this.state.currentTime}
           />
         </View>
-
     }
 
     return (
       <View style={{flex: 1, backgroundColor: 'black'}}>
+        {content}
         <Toolbar
           leftElement='arrow-back'
           onLeftElementPress={() => {
@@ -135,13 +143,12 @@ class DocumentViewScreen extends Component {
               </Text>
             </View>}
           style={{
-            container: {backgroundColor: COLOR.transparent},
+            container: {backgroundColor: COLOR.transparent, position: 'absolute', top:0, left:0},
             leftElement: {color: COLOR.white},
             titleText: {color: COLOR.white},
             rightElement: {color: COLOR.white}
           }}
         />
-        {content}
       </View>
     )
   }

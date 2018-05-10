@@ -10,8 +10,8 @@ import {ActionButton, ListItem, Toolbar} from 'react-native-material-ui'
 import Colors from '../Themes/Colors'
 // More info here: https://facebook.github.io/react-native/docs/flatlist.html
 import FileSystemActions from '../Redux/FileSystemRedux'
-import Spinner from 'react-native-loading-spinner-overlay'
 import _ from 'lodash'
+
 const TypesIcon = {
   'inode/directory': 'folder',
   'image/jpg': 'file-image',
@@ -49,8 +49,8 @@ class FilesList extends React.Component {
         searchable={{
           autoFocus: true,
           placeholder: 'Search',
-          onChangeText: value => this.setState({ searchText: value, dataObjects: this.searchFiles(value) }),
-          onSearchClosed: () => this.setState({ searchText: '', dataObjects: this.props.files })
+          onChangeText: value => this.setState({searchText: value, dataObjects: this.searchFiles(value)}),
+          onSearchClosed: () => this.setState({searchText: '', dataObjects: this.props.files})
         }}
       />)
     } else {
@@ -67,8 +67,8 @@ class FilesList extends React.Component {
         searchable={{
           autoFocus: true,
           placeholder: 'Search',
-          onChangeText: value => this.setState({ searchText: value, dataObjects: this.searchFiles(value) }),
-          onSearchClosed: () => this.setState({ searchText: '', dataObjects: this.props.files })
+          onChangeText: value => this.setState({searchText: value, dataObjects: this.searchFiles(value)}),
+          onSearchClosed: () => this.setState({searchText: '', dataObjects: this.props.files})
         }}
         />
       )
@@ -176,7 +176,7 @@ class FilesList extends React.Component {
           } else if (item.mimetype.includes('image/') || item.mimetype.includes('video/') || item.mimetype.includes('audio/')) {
             navigation.navigate('DocumentViewScreen', item)
           } else {
-            console.log("open fillesss")
+            console.log('open fillesss')
             this.openfile(item.url)
           }
         }}
@@ -208,7 +208,9 @@ class FilesList extends React.Component {
       <SafeAreaView style={styles.container}>
         {this.renderAppHeader()}
         {this.props.fetching
-          ? <ActivityIndicator size='large' color={Colors.primary} />
+          ? <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
+            <ActivityIndicator size='large' color={Colors.primary} />
+          </View>
           : <View style={{flex: 1}}>
             <FlatList
               contentContainerStyle={styles.listContent}
