@@ -1,7 +1,7 @@
 #  fileExplorer
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/)
 
-* File explorer with react native
+* File explorer with react native (https://play.google.com/store/apps/details?id=com.sidev.fileexplorer&rdid=com.sidev.fileexplorer)
 
 ## :arrow_up: How to Setup
 
